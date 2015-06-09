@@ -12,9 +12,10 @@
 
 namespace AppBundle\DependencyInjection;
 
+use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
-
 
 /**
  * Class AppExtension
@@ -40,5 +41,9 @@ class AppExtension extends Extension
         $config = $this->processConfiguration($configuration, $configs);
 
         $container->setParameter('app.tmdb.api_key', $config['api_key']);
+
+        $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
+        $loader->load('services.xml');
+
     }
 }
