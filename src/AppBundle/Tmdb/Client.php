@@ -3,6 +3,7 @@
 namespace AppBundle\Tmdb;
 
 use GuzzleHttp\Client as HttpClient;
+use GuzzleHttp\RequestOptions;
 
 /**
  * Class Client
@@ -25,7 +26,8 @@ class Client
 
         $this->client = new HttpClient(
             [
-                'base_uri' => $options['base_uri']
+                'base_uri' => $options['base_uri'],
+                RequestOptions::HEADERS => ['Accept' => 'application/json']
             ]
         );
     }
@@ -45,8 +47,8 @@ class Client
      */
     public function get($uri, array $options = [])
     {
-        $options['query']['api_key'] = $this->apiKey;
+        $options[RequestOptions::QUERY]['api_key'] = $this->apiKey;
 
-        $this->client->get($uri, $options);
+        return $this->client->get($uri, $options);
     }
 }

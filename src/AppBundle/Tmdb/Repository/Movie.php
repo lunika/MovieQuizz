@@ -3,6 +3,7 @@
 namespace AppBundle\Tmdb\Repository;
 
 use AppBundle\Tmdb\Client;
+use GuzzleHttp\RequestOptions;
 
 /**
  * Class Movie
@@ -29,17 +30,17 @@ class Movie implements RepositoryInterface
      */
     public function getPopular($options = array())
     {
-        $options = [];
-        $options['query'] = array_merge([
+        $parameters = [];
+        $parameters[RequestOptions::QUERY] = array_merge([
             'page' => 1,
             'language' => 'en'
         ], $options);
 
-        if ($options['query']['page'] < 0 || $options['query']['page'] > 1000) {
-            throw new \RuntimeException(sprintf('page number for getPopulat method must be between 1 and 1000. %d given', $options['query']['page']));
+        if ($parameters['query']['page'] < 0 || $parameters['query']['page'] > 1000) {
+            throw new \RuntimeException(sprintf('page number for getPopulat method must be between 1 and 1000. %d given', $parameters['query']['page']));
         }
 
-        return $this->client->get('movie/popular', $options);
+        return $this->client->get('movie/popular', $parameters);
     }
 
     /**
