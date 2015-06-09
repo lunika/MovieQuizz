@@ -81,4 +81,4 @@ swiftmailer:
 
 # app-configuration related
 app:
-  api_key: %tmdb_api_key%
+  api_key: %tmdb.api.key%
