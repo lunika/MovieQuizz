@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Person
  *
  * @ORM\Table()
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\PersonRepository")
  */
 class Person
 {
@@ -119,5 +119,25 @@ class Person
     public function addMovie(Movie $movie)
     {
         $this->movies->set($movie->getId(), $movie);
+    }
+
+    /**
+     * Remove movies
+     *
+     * @param \AppBundle\Entity\Movie $movies
+     */
+    public function removeMovie(\AppBundle\Entity\Movie $movies)
+    {
+        $this->movies->removeElement($movies);
+    }
+
+    /**
+     * Get movies
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getMovies()
+    {
+        return $this->movies;
     }
 }

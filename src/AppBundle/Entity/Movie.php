@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Movie
  *
  * @ORM\Table()
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\MovieRepository")
  */
 class Movie
 {
@@ -145,5 +145,15 @@ class Movie
 
 
         return $this;
+    }
+
+    /**
+     * Remove persons
+     *
+     * @param \AppBundle\Entity\Person $persons
+     */
+    public function removePerson(Person $persons)
+    {
+        $this->persons->removeElement($persons);
     }
 }

@@ -69,21 +69,23 @@ class FetchAllCommand extends ContainerAwareCommand
         $persons = $body['cast'];
 
         foreach ($persons as $person) {
-            $personRepo = $this->getContainer()->get('doctrine')->getRepository('AppBundle:Person');
+            if (null !== $person['profile_path']) {
+                $personRepo = $this->getContainer()->get('doctrine')->getRepository('AppBundle:Person');
 
-            if (null === $personModel = $personRepo->findOneById($person['id'])) {
-                $personModel = new Person();
-                $personModel
-                    ->setId($person['id'])
-                    ->setName($person['name'])
-                    ->setPicture($person['profile_path']);
+                if (null === $personModel = $personRepo->findOneById($person['id'])) {
+                    $personModel = new Person();
+                    $personModel
+                        ->setId($person['id'])
+                        ->setName($person['name'])
+                        ->setPicture($person['profile_path']);
 
-                if (false === $movie->isActor($personModel)) {
-                    $em->persist($personModel);
+                    if (false === $movie->isActor($personModel)) {
+                        $em->persist($personModel);
+                    }
                 }
-            }
 
-            $movie->addPerson($personModel);
+                $movie->addPerson($personModel);
+            }
         }
         $this->verifyRatingLimit($response);
 

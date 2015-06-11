@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-xs-6">
+            <img src="{{ movie.picture }}" class="img-responsive" alt="{{ movie.name }}">
+        </div>
+        <div class="col-xs-6">
+            <img src="{{ actor.picture }}" class="img-responsive" alt="{{ actor.name }}">
+        </div>
+    </div>
+
+{% endblock %}
