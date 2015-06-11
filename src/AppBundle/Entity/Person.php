@@ -48,9 +48,22 @@ class Person
     }
 
     /**
+     * Set id
+     *
+     * @param $id integer
+     * @return $this
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -73,7 +86,7 @@ class Person
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -88,7 +101,7 @@ class Person
      */
     public function setPicture($picture)
     {
-        $this->picture = $picture;
+        $this->picture = sprintf("%s%s", Movie::IMAGE_PATH, $picture);
 
         return $this;
     }
@@ -96,10 +109,15 @@ class Person
     /**
      * Get picture
      *
-     * @return string 
+     * @return string
      */
     public function getPicture()
     {
         return $this->picture;
+    }
+
+    public function addMovie(Movie $movie)
+    {
+        $this->movies->set($movie->getId(), $movie);
     }
 }

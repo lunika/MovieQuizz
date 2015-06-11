@@ -49,6 +49,10 @@ class Client
     {
         $options[RequestOptions::QUERY]['api_key'] = $this->apiKey;
 
+        // little delay before sending the request for never reach the Request Rate Limit
+        // http://docs.themoviedb.apiary.io/#introduction/request-rate-limiting
+        $options[RequestOptions::DELAY] = 250;
+
         return $this->client->get($uri, $options);
     }
 }

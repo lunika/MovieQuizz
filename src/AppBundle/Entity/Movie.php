@@ -13,6 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Movie
 {
+    const IMAGE_PATH = "https://image.tmdb.org/t/p/w500";
     /**
      * @var integer
      *
@@ -24,7 +25,7 @@ class Movie
     /**
      * @var ArrayCollection
      *
-     * @ORM\ManyToMany(targetEntity="Person", inversedBy="movies")
+     * @ORM\ManyToMany(targetEntity="Person", inversedBy="movies", cascade={"persist"})
      * @ORM\JoinTable(name="movie_person")
      */
     private $persons;
@@ -49,9 +50,20 @@ class Movie
     }
 
     /**
+     * @param $id integer
+     * @return $this
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -74,7 +86,7 @@ class Movie
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -89,7 +101,9 @@ class Movie
      */
     public function setPicture($picture)
     {
-        $this->picture = $picture;
+        $path = sprintf('%s%s', self::IMAGE_PATH, $picture);
+
+        $this->picture = $path;
 
         return $this;
     }
@@ -97,10 +111,39 @@ class Movie
     /**
      * Get picture
      *
-     * @return string 
+     * @return string
      */
     public function getPicture()
     {
         return $this->picture;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getPersons()
+    {
+        return $this->persons;
+    }
+
+    public function isActor(Person $person)
+    {
+        return $this->persons->contains($person) ?: $this->persons->containsKey($person->getId());
+    }
+
+    public function setPerson(Person $person)
+    {
+        echo "foo";
+    }
+
+    public function addPerson(Person $person)
+    {
+        if (false === $this->isActor($person)) {
+            $person->addMovie($this);
+            $this->persons->set($person->getId(), $person);
+        }
+
+
+        return $this;
     }
 }
