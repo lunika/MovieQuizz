@@ -16,11 +16,16 @@ class Client
 
     protected $client;
 
-    const BASE_URI = "https://api.themoviedb.org/3/";
+    protected $delay;
 
-    public function __construct($apiKey, $option = [])
+    const BASE_URI = "https://api.themoviedb.org/3/";
+    const DEFAULT_DELAY = 250;
+
+    public function __construct($apiKey, $delay, $option = [])
     {
         $this->apiKey = $apiKey;
+
+        $this->delay = $delay;
 
         $options = array_merge(['base_uri' => self::BASE_URI], $option);
 
@@ -51,7 +56,7 @@ class Client
 
         // little delay before sending the request for never reach the Request Rate Limit
         // http://docs.themoviedb.apiary.io/#introduction/request-rate-limiting
-        $options[RequestOptions::DELAY] = 250;
+        $options[RequestOptions::DELAY] = $this->delay;
 
         return $this->client->get($uri, $options);
     }

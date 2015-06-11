@@ -20,7 +20,7 @@ class MovieTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $client = new Client('foo', ['base_uri' => ClientTest::BASE_URI]);
+        $client = new Client('foo', 0, ['base_uri' => ClientTest::BASE_URI]);
 
         $this->repository = new Movie($client);
     }

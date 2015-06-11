@@ -7,6 +7,7 @@
     <services>
         <service class="AppBundle\Tmdb\Client" id="app.tmdb.client">
             <argument>%app.tmdb.api_key%</argument>
+            <argument>%app.tmdb.delay%</argument>
             <argument type="collection" />
         </service>
 

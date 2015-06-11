@@ -41,6 +41,7 @@ class AppExtension extends Extension
         $config = $this->processConfiguration($configuration, $configs);
 
         $container->setParameter('app.tmdb.api_key', $config['api_key']);
+        $container->setParameter('app.tmdb.delay', $config['delay']);
 
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.xml');

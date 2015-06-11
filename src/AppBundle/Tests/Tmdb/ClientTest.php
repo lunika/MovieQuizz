@@ -15,7 +15,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
 
     public function testConnection()
     {
-        $client = new Client('foo', ['base_uri' => self::BASE_URI]);
+        $client = new Client('foo', 0, ['base_uri' => self::BASE_URI]);
 
         $response = $client->get('configuration');
 

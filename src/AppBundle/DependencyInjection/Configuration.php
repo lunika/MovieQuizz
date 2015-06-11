@@ -1,9 +1,9 @@
 <?php
 namespace AppBundle\DependencyInjection;
 
+use AppBundle\Tmdb\Client;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
-
 
 /**
  * Class Configuration
@@ -25,6 +25,9 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
+                ->floatNode('delay')
+                    ->defaultValue(Client::DEFAULT_DELAY)
+                ->end()
                 ->scalarNode('api_key')
                     ->isRequired()
                     ->cannotBeEmpty()
