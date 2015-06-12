@@ -2,6 +2,8 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\HighScore;
+use AppBundle\Form\Type\HighScoreType;
 use AppBundle\Form\Type\QuizzType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -104,10 +106,26 @@ class PlayController extends Controller
         $start = $session->get('start_time');
         $end = $session->get('end_time');
         $diff = $start->diff($end);
-        return $this->render('default/end.html.twig', [
+        $parameters = [
             'score' => $request->getSession()->get('score', 0),
             'duration' => $diff->format('%H:%I:%S')
-        ]);
+        ];
+
+        $parameters = $this->checkHighScore($request->getSession()->get('score', 0), $parameters);
+
+        return $this->render('default/end.html.twig', $parameters);
+    }
+
+    protected function checkHighScore($score, $parameters)
+    {
+        $repo = $this->getDoctrine()->getRepository('AppBundle:HighScore');
+
+        if ($repo->isInHighScore($score)) {
+            $form = $this->createForm(new HighScoreType(), [], ['action' => $this->generateUrl('process_play')]);
+            $parameters['form'] = $form->createView();
+        }
+
+        return $parameters;
     }
 
     /**

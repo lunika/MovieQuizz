@@ -7,7 +7,12 @@
             {% transchoice score with {'%duration%': duration} %}
             [0,1]%score% good answer in %duration%|]1,Inf[%score% good answers in %duration%
             {% endtranschoice%}
-
         </p>
+        {% if form is defined %}
+            <p>Congratulations! Your are in the 10 highest scores. Fill this form if you want to appear in the highest scores</p>
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+            {{ form_end(form) }}
+        {% endif %}
     </div>
 {% endblock %}
