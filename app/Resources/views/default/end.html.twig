@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="starter-template">
+        <h1>Game over</h1>
+        <p>
+            {% transchoice score with {'%duration%': duration} %}
+            [0,1]%score% good answer in %duration%|]1,Inf[%score% good answers in %duration%
+            {% endtranschoice%}
+
+        </p>
+    </div>
+{% endblock %}
