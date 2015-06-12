@@ -1,0 +1,16 @@
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Score</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for score in scores %}
+        <tr>
+            <td>{{ score.name }}</td>
+            <td>{{ score.score }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

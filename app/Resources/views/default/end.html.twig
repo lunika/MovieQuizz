@@ -15,4 +15,10 @@
             {{ form_end(form) }}
         {% endif %}
     </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <p>Highest scores</p>
+            {{ render(controller('AppBundle:HighScore:highestScores')) }}
+        </div>
+    </div>
 {% endblock %}
