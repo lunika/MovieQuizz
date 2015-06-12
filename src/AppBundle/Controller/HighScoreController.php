@@ -53,6 +53,8 @@ class HighScoreController extends Controller
             $em->flush();
 
             return $this->redirectToRoute("highscore_display");
+        } else {
+            return $this->forward("AppBundle:Play:gameOver", [], ['error' => 1]);
         }
     }
 

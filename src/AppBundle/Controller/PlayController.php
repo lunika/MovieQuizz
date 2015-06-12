@@ -111,17 +111,20 @@ class PlayController extends Controller
             'duration' => $diff->format('%H:%I:%S')
         ];
 
-        $parameters = $this->checkHighScore($request->getSession()->get('score', 0), $parameters);
+        $parameters = $this->checkHighScore($request, $parameters);
 
         return $this->render('default/end.html.twig', $parameters);
     }
 
-    protected function checkHighScore($score, $parameters)
+    protected function checkHighScore(Request $request, $parameters)
     {
         $repo = $this->getDoctrine()->getRepository('AppBundle:HighScore');
 
-        if ($repo->isInHighScore($score)) {
+        if ($repo->isInHighScore($request->getSession()->get('score'))) {
             $form = $this->createForm(new HighScoreType(), [], ['action' => $this->generateUrl('highscore_save')]);
+            if ($request->query->get('error', false)) {
+                $form->handleRequest($request);
+            }
             $parameters['form'] = $form->createView();
         }
 
