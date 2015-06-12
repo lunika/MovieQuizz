@@ -2,6 +2,11 @@
 
 {% block body %}
     <div class="row">
+        <div class="col-xs-12">
+            <p class="text-center">Current score : {{ score }}</p>
+        </div>
+    </div>
+    <div class="row">
         <div class="col-xs-6">
             <img src="{{ movie.picture }}" class="img-responsive" alt="{{ movie.name }}">
         </div>
@@ -9,7 +14,7 @@
             <img src="{{ actor.picture }}" class="img-responsive" alt="{{ actor.name }}">
         </div>
         <div class="row">
-            <div class="col-xs-12 center-block">
+            <div class="col-xs-12 text-center">
                 {{ form_start(form) }}
                 {{ form_widget(form) }}
                 {{ form_end(form) }}

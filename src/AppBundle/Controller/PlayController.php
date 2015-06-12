@@ -56,7 +56,8 @@ class PlayController extends Controller
         return $this->render('default/play.html.twig', [
             'movie' => $movie,
             'actor' => $actor,
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'score' => $request->getSession()->get('score', 0)
         ]);
     }
 
