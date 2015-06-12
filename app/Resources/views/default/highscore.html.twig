@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-xs-12">
+            <h1>Highest scores</h1>
+            {{ render(controller('AppBundle:HighScore:highestScores')) }}
+        </div>
+    </div>
+{% endblock %}

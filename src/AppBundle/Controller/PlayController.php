@@ -121,7 +121,7 @@ class PlayController extends Controller
         $repo = $this->getDoctrine()->getRepository('AppBundle:HighScore');
 
         if ($repo->isInHighScore($score)) {
-            $form = $this->createForm(new HighScoreType(), [], ['action' => $this->generateUrl('process_play')]);
+            $form = $this->createForm(new HighScoreType(), [], ['action' => $this->generateUrl('highscore_save')]);
             $parameters['form'] = $form->createView();
         }
 

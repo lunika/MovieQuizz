@@ -2,8 +2,12 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\HighScore;
+use AppBundle\Form\Type\HighScoreType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class HighScoreController
@@ -25,5 +29,39 @@ class HighScoreController extends Controller
         return $this->render(':default/partial:highscore.html.twig', [
             'scores' => $highScores
         ]);
+    }
+
+    /**
+     * @Route("/highscore", name="highscore_save")
+     * @Method("POST")
+     * @param Request $request
+     */
+    public function saveAction(Request $request)
+    {
+        $form = $this->createForm(new HighScoreType());
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $highScore = new HighScore();
+
+            $highScore
+                ->setName($form->get('name')->getData())
+                ->setScore($request->getSession()->get('score'));
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($highScore);
+            $em->flush();
+
+            return $this->redirectToRoute("highscore_display");
+        }
+    }
+
+    /**
+     * @Route("/highscore", name="highscore_display")
+     * @Method("GET")
+     */
+    public function displayAction()
+    {
+        return $this->render(":default:highscore.html.twig");
     }
 }
