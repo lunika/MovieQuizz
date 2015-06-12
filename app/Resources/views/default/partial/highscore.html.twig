@@ -3,6 +3,7 @@
         <tr>
             <th>Name</th>
             <th>Score</th>
+            <th>Duration</th>
         </tr>
     </thead>
     <tbody>
@@ -10,6 +11,7 @@
         <tr>
             <td>{{ score.name }}</td>
             <td>{{ score.score }}</td>
+            <td>{{ attribute(score, "getFormattedDuration") }}</td>
         </tr>
     {% endfor %}
     </tbody>

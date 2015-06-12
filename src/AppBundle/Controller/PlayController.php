@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\HighScore;
 use AppBundle\Form\Type\HighScoreType;
 use AppBundle\Form\Type\QuizzType;
+use AppBundle\Tool\DateIntervalEnhanced;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -103,12 +104,11 @@ class PlayController extends Controller
     {
         $session = $request->getSession();
 
-        $start = $session->get('start_time');
-        $end = $session->get('end_time');
-        $diff = $start->diff($end);
+        $duration = $session->get('end_time') - $session->get('start_time');
+        $diff = new DateIntervalEnhanced(sprintf("PT%dS", $duration));
         $parameters = [
             'score' => $request->getSession()->get('score', 0),
-            'duration' => $diff->format('%H:%I:%S')
+            'duration' => $diff->recalculate()->format('%H:%I:%S')
         ];
 
         $parameters = $this->checkHighScore($request, $parameters);
@@ -149,7 +149,7 @@ class PlayController extends Controller
      */
     protected function endParty(SessionInterface $session)
     {
-        $session->set('end_time', new \DateTime());
+        $session->set('end_time', time());
         $session->set('inParty', false);
     }
 
@@ -163,7 +163,7 @@ class PlayController extends Controller
         if (false === $session->get('inParty', false)) {
             $session->set('inParty', true);
             $session->set('score', 0);
-            $session->set('start_time', new \DateTime());
+            $session->set('start_time', time());
         }
     }
 }

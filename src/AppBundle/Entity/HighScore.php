@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Tool\DateIntervalEnhanced;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -34,6 +35,13 @@ class HighScore
      * @ORM\Column(name="score", type="integer")
      */
     private $score;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="duration", type="integer")
+     */
+    private $duration;
 
 
     /**
@@ -90,5 +98,30 @@ class HighScore
     public function getScore()
     {
         return $this->score;
+    }
+
+    /**
+     * @return int
+     */
+    public function getDuration()
+    {
+        return $this->duration;
+    }
+
+    public function getFormattedDuration()
+    {
+        $duration = new DateIntervalEnhanced(sprintf("PT%dS", $this->getDuration()));
+        return $duration->recalculate()->format('%H:%I:%S');
+    }
+
+    /**
+     * @param int $duration
+     * @return $this
+     */
+    public function setDuration($duration)
+    {
+        $this->duration = $duration;
+
+        return $this;
     }
 }

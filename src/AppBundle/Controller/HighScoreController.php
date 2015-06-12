@@ -43,10 +43,15 @@ class HighScoreController extends Controller
 
         if ($form->isValid()) {
             $highScore = new HighScore();
+            $session = $request->getSession();
+
+            $duration = $session->get('end_time') - $session->get('start_time');
 
             $highScore
                 ->setName($form->get('name')->getData())
-                ->setScore($request->getSession()->get('score'));
+                ->setScore($request->getSession()->get('score'))
+                ->setDuration($duration)
+            ;
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($highScore);

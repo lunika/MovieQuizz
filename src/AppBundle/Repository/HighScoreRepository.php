@@ -17,6 +17,7 @@ class HighScoreRepository extends EntityRepository
     {
         return $this->createQueryBuilder('h')
             ->orderBy('h.score', 'DESC')
+            ->orderBy('h.duration', 'ASC')
             ->setMaxResults($limit)
             ->getQuery()
             ->getResult();
