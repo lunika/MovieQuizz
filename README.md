@@ -42,10 +42,11 @@ the ```page``` option is not mandatory and the default value is 1. Each page con
 
 You can use this command in a cron if you want fresh data every day.
 
-## Roadmap
+## Reset high score
 
-* save high score
-* display high score
-* reset high score
-* display current score in a party
+If you want to reset highest scores saved in database, you can this command : 
+
+```
+$ php app/console app:reset-highscore
+```
 
