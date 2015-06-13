@@ -28,8 +28,5 @@ class ResetHighScoreCommand extends ContainerAwareCommand
         $this->getContainer()->get('event_dispatcher')->dispatch(AppEvents::RESET_HIGHSCORE, new Event());
 
         $output->writeln(['', '<info>reset done !</info>']);
-
     }
-
-
 }

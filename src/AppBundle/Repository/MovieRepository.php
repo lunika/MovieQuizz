@@ -25,5 +25,4 @@ class MovieRepository extends EntityRepository
             ->getQuery()
             ->getOneOrNullResult();
     }
-
 }

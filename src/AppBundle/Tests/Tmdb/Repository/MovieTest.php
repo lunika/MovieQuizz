@@ -55,6 +55,5 @@ class MovieTest extends \PHPUnit_Framework_TestCase
         $this->assertArrayHasKey('cast', $body, '/movie/{id}/credits must contain cast parameter');
         $this->assertArrayHasKey('crew', $body, '/movie/{id}/credits must contain crew parameter');
         $this->assertNotEmpty($body['cast'], '/movie/{id}/credits cast parameter can\'t be empty');
-
     }
 }

@@ -88,7 +88,6 @@ class FetchAllCommand extends ContainerAwareCommand
             }
         }
         $this->verifyRatingLimit($response);
-
     }
 
     protected function fetchMovies(InputInterface $input, OutputInterface $output)
