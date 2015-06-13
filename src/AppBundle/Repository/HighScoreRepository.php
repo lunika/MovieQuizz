@@ -28,22 +28,37 @@ class HighScoreRepository extends EntityRepository
         if ($score == 0) {
             return false;
         }
-        $result = $this->getEntityManager()
-            ->createQuery("
-                SELECT COUNT(h.id) as result
-                FROM AppBundle:HighScore h
-                WHERE h.score >= :score
-            ")
-            ->setParameters([
-                'score' => $score,
-                //'duration' => $duration
-            ])
-            ->getOneOrNullResult();
+        $highScore = $this->findHighScore($score, $limit);
 
-        if (null === $result) {
+        if (count($highScore) < $limit) {
             return true;
         }
 
-        return $result['result'] < $limit;
+        if (count($highScore) == $limit) {
+            $last = array_pop($highScore);
+
+            if ($duration < $last->getDuration() && $score >= $last->getScore()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private function findHighScore($score)
+    {
+        $result = $this->getEntityManager()
+            ->createQuery("
+                SELECT h
+                FROM AppBundle:HighScore h
+                WHERE h.score >= :score
+                ORDER BY h.score DESC, h.duration ASC
+            ")
+            ->setParameters([
+                'score' => $score,
+            ])
+            ->getResult();
+
+        return $result;
     }
 }
