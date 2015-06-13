@@ -2,9 +2,11 @@
 
 namespace AppBundle\Command;
 
+use AppBundle\AppEvents;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\EventDispatcher\Event;
 
 /**
  * Class ResetHighScoreCommand
@@ -23,11 +25,7 @@ class ResetHighScoreCommand extends ContainerAwareCommand
     {
         $output->writeln(['<info>removing all records</info>']);
 
-        $repo = $this->getContainer()->get('doctrine')->getRepository('AppBundle:HighScore');
-        $connection = $this->getContainer()->get('doctrine')->getConnection();
-        $platform = $connection->getDatabasePlatform();
-
-        $connection->executeUpdate($platform->getTruncateTableSQL('high_score'));
+        $this->getContainer()->get('event_dispatcher')->dispatch(AppEvents::RESET_HIGHSCORE, new Event());
 
         $output->writeln(['', '<info>reset done !</info>']);
 
