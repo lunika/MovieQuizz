@@ -16,27 +16,34 @@ class HighScoreRepository extends EntityRepository
     public function getHighScore($limit = 10)
     {
         return $this->createQueryBuilder('h')
-            ->orderBy('h.score', 'DESC')
-            ->orderBy('h.duration', 'ASC')
+            ->addOrderBy('h.score', 'DESC')
+            ->addOrderBy('h.duration', 'ASC')
             ->setMaxResults($limit)
             ->getQuery()
             ->getResult();
     }
 
-    public function isInHighScore($score, $limit = 10)
+    public function isInHighScore($score, $duration, $limit = 10)
     {
-        $min = $this->getEntityManager()
+        if ($score == 0) {
+            return false;
+        }
+        $result = $this->getEntityManager()
             ->createQuery("
-                SELECT MIN(h.score) AS min_score
+                SELECT COUNT(h.id) as result
                 FROM AppBundle:HighScore h
+                WHERE h.score >= :score
             ")
-            ->setMaxResults($limit)
-            ->getSingleScalarResult();
+            ->setParameters([
+                'score' => $score,
+                //'duration' => $duration
+            ])
+            ->getOneOrNullResult();
 
-        if (null === $min) {
-            $min = 0;
+        if (null === $result) {
+            return true;
         }
 
-        return $score > $min;
+        return $result['result'] < $limit;
     }
 }

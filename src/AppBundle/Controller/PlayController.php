@@ -119,8 +119,8 @@ class PlayController extends Controller
     protected function checkHighScore(Request $request, $parameters)
     {
         $repo = $this->getDoctrine()->getRepository('AppBundle:HighScore');
-
-        if ($repo->isInHighScore($request->getSession()->get('score'))) {
+        $duration = $request->getSession()->get('end_time') - $request->getSession()->get('start_time');
+        if ($repo->isInHighScore($request->getSession()->get('score'), $duration)) {
             $form = $this->createForm(new HighScoreType(), [], ['action' => $this->generateUrl('highscore_save')]);
             if ($request->query->get('error', false)) {
                 $form->handleRequest($request);
