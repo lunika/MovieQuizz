@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Movie
 {
-    const IMAGE_PATH = "https://image.tmdb.org/t/p/w500";
+    const IMAGE_PATH = "https://image.tmdb.org/t/p/w300";
     /**
      * @var integer
      *
