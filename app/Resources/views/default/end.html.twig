@@ -19,10 +19,13 @@
             {{ form_widget(form) }}
             {{ form_end(form) }}
         {% endif %}
+        <p>
+            <a class="btn btn-default btn-lg" href="{{ path("play") }}">Play again</a>
+        </p>
     </div>
     <div class="row">
         <div class="col-xs-12">
-            <p>Highest scores</p>
+            <h2>Highest scores</h2>
             {{ render(controller('AppBundle:HighScore:highestScores')) }}
         </div>
     </div>
