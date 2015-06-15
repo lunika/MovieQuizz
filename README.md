@@ -3,14 +3,14 @@ MovieQuizz
 
 Small game testing cinematographic culture
 
-## installation
+## Installation
 
 ```
-$ git clone https://github.com/lunika/moviequizz
-$ cd moviequizz
-$ composer install
-$ php app/console doctrine:database:create
-$ php app/console doctrine:schema:update --force
+git clone https://github.com/lunika/moviequizz
+cd moviequizz
+composer install
+php app/console doctrine:database:create
+php app/console doctrine:schema:update --force
 ```
 
 ## Configuration
@@ -35,7 +35,7 @@ If you want to start a party, you need first to retrieve some data from [**The M
 You can use a command for this job : 
 
 ```
-$ php app/console app:fetch-all --page=3
+php app/console app:fetch-all --page=3
 ```
 
 the ```page``` option is not mandatory and the default value is 1. Each page contains more or less 10 movies. This task can be long due to the API [request rate limiting](http://docs.themoviedb.apiary.io/#introduction/request-rate-limiting).
@@ -47,6 +47,6 @@ You can use this command in a cron if you want fresh data every day.
 If you want to reset highest scores saved in database, you can this command : 
 
 ```
-$ php app/console app:reset-highscore
+php app/console app:reset-highscore
 ```
 
