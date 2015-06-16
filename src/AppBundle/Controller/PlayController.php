@@ -6,6 +6,7 @@ use AppBundle\Entity\HighScore;
 use AppBundle\Form\Type\HighScoreType;
 use AppBundle\Form\Type\QuizzType;
 use AppBundle\Tool\DateIntervalEnhanced;
+use AppBundle\Tool\Signature;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -45,10 +46,11 @@ class PlayController extends Controller
         }
 
         $form = $this->createForm(
-            new QuizzType(),
+            'quizz',
             [
                 'movie' => $movie->getId(),
-                'actor' => $actor->getId()
+                'actor' => $actor->getId(),
+                'signature' => Signature::generate($movie->getId(), $actor->getId(), $this->container->getParameter('secret'))
             ],
             [
                 'action' => $this->generateUrl('process_play'),
@@ -64,13 +66,18 @@ class PlayController extends Controller
         ]);
     }
 
+    private function generateSignature($movieId, $actorId, $secret)
+    {
+
+    }
+
     /**
      * @Route("/play", name="process_play")
      * @Method("POST")
      */
     public function processPlayAction(Request $request)
     {
-        $form = $this->createForm(new QuizzType());
+        $form = $this->createForm('quizz');
         $form->handleRequest($request);
         $session = $request->getSession();
 

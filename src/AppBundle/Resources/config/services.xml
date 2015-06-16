@@ -20,6 +20,11 @@
             <tag name="kernel.event_subscriber" />
         </service>
 
+        <service id="app.form.type.quizz" class="AppBundle\Form\Type\QuizzType">
+            <argument>%secret%</argument>
+            <tag name="form.type" alias="quizz" />
+        </service>
+
 
     </services>
 

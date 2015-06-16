@@ -80,4 +80,22 @@ class PlayControllerTest extends WebTestCase
         $request = $client->getRequest();
         $this->assertEquals('/gameover', $request->getPathInfo(), 'on a wrong submission, player is redirected on /gameover');
     }
+
+    public function testChangingSignature()
+    {
+        $client = static::createClient();
+        $client->followRedirects();
+
+        $crawler = $client->request('GET', '/play');
+
+        $form = $crawler->selectButton('quizz_no')->form();
+        $form->setValues([
+            'quizz[movie]' => uniqid()
+        ]);
+
+        $client->submit($form);
+
+        $request = $client->getRequest();
+        $this->assertEquals('/gameover', $request->getPathInfo(), 'if form is modified the player is redirected to /gameover');
+    }
 }
