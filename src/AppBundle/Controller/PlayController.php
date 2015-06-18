@@ -65,12 +65,7 @@ class PlayController extends Controller
             'score' => $request->getSession()->get('score', 0)
         ]);
     }
-
-    private function generateSignature($movieId, $actorId, $secret)
-    {
-
-    }
-
+    
     /**
      * @Route("/play", name="process_play")
      * @Method("POST")
