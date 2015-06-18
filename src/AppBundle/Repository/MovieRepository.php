@@ -13,6 +13,12 @@ use Doctrine\ORM\EntityRepository;
 class MovieRepository extends EntityRepository
 {
 
+    /**
+     * choose randomly a movie in database
+     *
+     * @return mixed
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
     public function getRandomMovie()
     {
         $count = $this->createQueryBuilder('m')->select('COUNT(m.id)')->getQuery()->getSingleScalarResult();

@@ -12,6 +12,12 @@ use Doctrine\ORM\EntityRepository;
  */
 class PersonRepository extends EntityRepository
 {
+    /**
+     * choose randomly a person in database
+     *
+     * @param $excludeMovie
+     * @return mixed
+     */
     public function getRandomPerson($excludeMovie)
     {
         $dql = <<<EOL

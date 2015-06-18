@@ -22,6 +22,10 @@ class ResetHightScoreListener implements EventSubscriberInterface
         $this->doctrine = $doctine;
     }
 
+    /**
+     * Truncate high_score table
+     * @param Event $event
+     */
     public function resetHighScore(Event $event)
     {
         $connection = $this->doctrine->getConnection();

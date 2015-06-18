@@ -12,6 +12,9 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 class PlayControllerTest extends WebTestCase
 {
 
+    /**
+     * check if once a party loaded, there are 2 images.
+     */
     public function testSimpleLoad()
     {
         $client = static::createClient();
@@ -25,6 +28,9 @@ class PlayControllerTest extends WebTestCase
         );
     }
 
+    /**
+     * Test what append when the player submit a good answer
+     */
     public function testRightSubmission()
     {
         $client = static::createClient();
@@ -53,6 +59,9 @@ class PlayControllerTest extends WebTestCase
         $this->assertEquals('/play', $request->getPathInfo(), 'on a good submission, the player is redirected on /play');
     }
 
+    /**
+     * Test what append when a player submit a wrong answer
+     */
     public function testWrongSubmission()
     {
         $client = static::createClient();
@@ -81,6 +90,9 @@ class PlayControllerTest extends WebTestCase
         $this->assertEquals('/gameover', $request->getPathInfo(), 'on a wrong submission, player is redirected on /gameover');
     }
 
+    /**
+     * change the signature and then submit the form.
+     */
     public function testChangingSignature()
     {
         $client = static::createClient();
@@ -99,6 +111,9 @@ class PlayControllerTest extends WebTestCase
         $this->assertEquals('/gameover', $request->getPathInfo(), 'if form is modified the player is redirected to /gameover');
     }
 
+    /**
+     * Test a party without good answer
+     */
     public function testGameOverWithoutScore()
     {
         $client = static::createClient();
@@ -133,6 +148,9 @@ class PlayControllerTest extends WebTestCase
         $this->assertEquals(0, $crawler->filter('form[name=high_score]')->count(), 'form for highscore must be missing');
     }
 
+    /**
+     * Test a party with a new high score
+     */
     public function testNewHighScore()
     {
         $client = static::createClient();

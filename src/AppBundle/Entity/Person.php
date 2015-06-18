@@ -116,6 +116,9 @@ class Person
         return $this->picture;
     }
 
+    /**
+     * @param Movie $movie
+     */
     public function addMovie(Movie $movie)
     {
         $this->movies->set($movie->getId(), $movie);

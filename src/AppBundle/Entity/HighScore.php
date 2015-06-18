@@ -108,6 +108,9 @@ class HighScore
         return $this->duration;
     }
 
+    /**
+     * @return string
+     */
     public function getFormattedDuration()
     {
         $duration = new DateIntervalEnhanced(sprintf("PT%dS", $this->getDuration()));

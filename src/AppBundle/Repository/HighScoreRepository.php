@@ -13,6 +13,12 @@ use Doctrine\ORM\EntityRepository;
 class HighScoreRepository extends EntityRepository
 {
 
+    /**
+     * return an array of high score order by score and duration
+     *
+     * @param int $limit
+     * @return array
+     */
     public function getHighScore($limit = 10)
     {
         return $this->createQueryBuilder('h')
@@ -23,6 +29,14 @@ class HighScoreRepository extends EntityRepository
             ->getResult();
     }
 
+    /**
+     * check if the combination of $score and $duration can be in the high score.
+     *
+     * @param $score
+     * @param $duration
+     * @param int $limit
+     * @return bool
+     */
     public function isInHighScore($score, $duration, $limit = 10)
     {
         if ($score == 0) {

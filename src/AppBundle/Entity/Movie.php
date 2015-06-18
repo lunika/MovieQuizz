@@ -126,16 +126,19 @@ class Movie
         return $this->persons;
     }
 
+    /**
+     * @param Person $person
+     * @return bool
+     */
     public function isActor(Person $person)
     {
         return $this->persons->contains($person) ?: $this->persons->containsKey($person->getId());
     }
 
-    public function setPerson(Person $person)
-    {
-        echo "foo";
-    }
-
+    /**
+     * @param Person $person
+     * @return $this
+     */
     public function addPerson(Person $person)
     {
         if (false === $this->isActor($person)) {

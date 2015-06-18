@@ -65,7 +65,7 @@ class PlayController extends Controller
             'score' => $request->getSession()->get('score', 0)
         ]);
     }
-    
+
     /**
      * @Route("/play", name="process_play")
      * @Method("POST")
