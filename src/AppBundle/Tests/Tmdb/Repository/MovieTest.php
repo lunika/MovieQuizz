@@ -41,7 +41,7 @@ class MovieTest extends \PHPUnit_Framework_TestCase
         $this->assertGreaterThan(0, count($body['results']), '/movie/popular results parameter can\'t be empty');
     }
 
-    public function testGetGetCredits()
+    public function testGetCredits()
     {
         //https://www.themoviedb.org/movie/49051-the-hobbit-an-unexpected-journey
         $response = $this->repository->getCredits(40951);
