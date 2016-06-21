@@ -3,16 +3,19 @@ machine:
     version: 5.5.21
   environment:
     SYMFONY__TMDB__API__KEY: foo
+  services:
+    - docker
 
 dependencies:
+  pre:
+    - docker info
   post:
     - cp circle/parameters.yml app/config/parameters.yml
+    - docker run -e MYSQL_ROOT_PASSWORD=root -p 3307:3306 -d percona:5.7
 
 database:
-  pre:
-    - mysql --version
   override:
-    - mysql -e 'create database symfony;'
+    - mysql -e 'create database symfony;' -h 127.0.0.1:3307
     - php app/console doctrine:schema:create
     - php app/console doctrine:schema:update --force
 
