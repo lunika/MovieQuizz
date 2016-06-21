@@ -9,6 +9,8 @@ dependencies:
     - cp circle/parameters.yml app/config/parameters.yml
 
 database:
+  pre:
+    - mysql --version
   override:
     - mysql -e 'create database symfony;'
     - php app/console doctrine:schema:create
@@ -16,4 +18,4 @@ database:
 
 test:
   override:
-    - ./bin/phpunit app/
+    - ./bin/phpunit -c app/
