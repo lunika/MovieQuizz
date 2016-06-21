@@ -12,6 +12,8 @@ dependencies:
   post:
     - cp circle/parameters.yml app/config/parameters.yml
     - docker run -e MYSQL_ROOT_PASSWORD=root -p 3307:3306 -d percona:5.7
+    - docker info
+    - docker ps
 
 database:
   override:
