@@ -3,3 +3,12 @@ machine:
     version: 5.5.21
   environment:
     SYMFONY__TMDB__API__KEY: foo
+
+database:
+  override:
+    - php app/console doctrine:schema:create
+    - php app/console doctrine:schema:update --force
+
+test:
+  override:
+    - ./bin/phpunit app/
