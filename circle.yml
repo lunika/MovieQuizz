@@ -8,16 +8,14 @@ machine:
 
 dependencies:
   pre:
-    - docker info
+    - docker run -e MYSQL_ROOT_PASSWORD=root -p 3307:3306 -d percona:5.7
   post:
     - cp circle/parameters.yml app/config/parameters.yml
-    - docker run -e MYSQL_ROOT_PASSWORD=root -p 3307:3306 -d percona:5.7
-    - docker info
-    - docker ps
+
 
 database:
   override:
-    - mysql -e 'create database symfony;' -h 127.0.0.1:3307
+    - mysql -e 'create database symfony;' -h 127.0.0.1 -P 3307 -u root -proot
     - php app/console doctrine:schema:create
     - php app/console doctrine:schema:update --force
 
